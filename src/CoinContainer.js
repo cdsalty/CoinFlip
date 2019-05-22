@@ -16,5 +16,14 @@ class CoinContainer extends Component {
       numOfTails: 0
     }
   }
+
+  render(){
+    return(
+      <div className = "CoinContainer">
+        <h2>Flip The Coin</h2>
+        <p>Out of {this.state.numOfFlips} flips, the coin has landed on heads {this.state.numOfHeads} times and tails {this.state.numOfTails}</p>
+      </div>
+    );
+  }
 }
 export default CoinContainer;
