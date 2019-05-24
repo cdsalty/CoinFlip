@@ -18,10 +18,17 @@ class CoinContainer extends Component {
     };
     this.handleClick = this.handleClick.bind(this);
   }
+
+  // flip coin needs to: create a random number and assign to a varaible. This will either be heads or tails
+    /* determine heads or tails; then assign it to a varaible. */
   flipCoin(){
-    const newCoin = choice(this.state.coins); // created a varaible created from the choice function in our helper component. 
-    
-    // next, I need to setState... this.setState
+    const newCoin = choice(this.props.coins); // calling choice and running the two coins' inside, to determine heads or tails
+    this.setState(st => {  // st represents the current state we are GOING TO CHANGE. 
+      return {
+        currCoinSide: newCoin, // the currentCoinSide is now the value of 'newCoin,' created in this function
+        numOfFlips: st.numOfFlips + 1, // must pass in state somewhere... it's a parameter in the function
+      }
+    });
   }
   handleClick(e) {
     this.flipCoin();

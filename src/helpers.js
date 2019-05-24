@@ -1,8 +1,9 @@
-// function 'choice' is going to take an array and return a random index
-// it will return the array at that index
+
 function choice(arr) {
   let randomIndex = Math.floor(Math.random() * arr.length);
-  return arr[randomIndex];
+    return arr[randomIndex];
 }
-    
+// this function does two main things:
+//   - assigns a variable to the random number. 
+//   - returns an array with the random number assigned to the variable created inside the function.   
 export { choice };
