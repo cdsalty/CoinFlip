@@ -21,14 +21,23 @@ class CoinContainer extends Component {
 
   // flip coin needs to: create a random number and assign to a varaible. This will either be heads or tails
     /* determine heads or tails; then assign it to a varaible. */
-  flipCoin(){
-    const newCoin = choice(this.props.coins); // calling choice and running the two coins' inside, to determine heads or tails
-    this.setState(st => {  // st represents the current state we are GOING TO CHANGE. 
-      return {
-        currCoinSide: newCoin, // the currentCoinSide is now the value of 'newCoin,' created in this function
-        numOfFlips: st.numOfFlips + 1, // must pass in state somewhere... it's a parameter in the function
+  flipCoin() {
+    let newCoin = choice(this.props.coins); //currCoinSide will now be equal to newCoin
+    // TWO DIFFERENT WAYS TO SETSTATE:
+    /*Option 1: */
+    this.setState(st => {
+      let newState = {
+        ...st, 
+        currCoinSide: newCoin,
+        numOfFlips: st.numOfFlips + 1
       }
-    });
+      if(newCoin.side === "heads"){
+        newState.numOfHeads += 1;
+      } else{
+        newState.numOfTails += 1;
+      }
+      return newState;
+    }); 
   }
   handleClick(e) {
     this.flipCoin();
