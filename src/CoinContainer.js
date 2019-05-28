@@ -25,23 +25,33 @@ class CoinContainer extends Component {
     let newCoin = choice(this.props.coins); //currCoinSide will now be equal to newCoin
     // TWO DIFFERENT WAYS TO SETSTATE:
     /*Option 1: */
+    // this.setState(st => {
+    //   let newState = {
+    //     ...st, 
+    //     currCoinSide: newCoin,
+    //     numOfFlips: st.numOfFlips + 1
+    //   }
+    //   if(newCoin.side === "heads"){
+    //     newState.numOfHeads += 1;
+    //   } else{
+    //     newState.numOfTails += 1;
+    //   }
+    //   return newState;
+    // }); 
+
     this.setState(st => {
-      let newState = {
-        ...st, 
+      return {
         currCoinSide: newCoin,
-        numOfFlips: st.numOfFlips + 1
+        numOfFlips: st.numOfFlips += 1, // MUST CALL (ST.) and then numOfFlips. Keep leaving off state
+        numOfHeads: st.numOfHeads + (newCoin.side === "heads" ? 1 : 0),
+        numOfTails: st.numOfTails + (newCoin.side === "tails" ? 1 : 0)
       }
-      if(newCoin.side === "heads"){
-        newState.numOfHeads += 1;
-      } else{
-        newState.numOfTails += 1;
-      }
-      return newState;
-    }); 
+    })
   }
   handleClick(e) {
     this.flipCoin();
   };
+ 
 
   render(){
     return(
