@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Coin from './Coin'
 import { choice } from './helpers';
 
 class CoinContainer extends Component {
@@ -11,7 +12,7 @@ class CoinContainer extends Component {
   constructor(props){
     super(props);
     this.state = {
-      currCoinSide: null,
+      currCoin: null,
       numOfFlips: 0,
       numOfHeads: 0,
       numOfTails: 0
@@ -22,31 +23,33 @@ class CoinContainer extends Component {
   // flip coin needs to: create a random number and assign to a varaible. This will either be heads or tails
     /* determine heads or tails; then assign it to a varaible. */
   flipCoin() {
-    let newCoin = choice(this.props.coins); //currCoinSide will now be equal to newCoin
-    // TWO DIFFERENT WAYS TO SETSTATE:
-    /*Option 1: */
-    // this.setState(st => {
-    //   let newState = {
-    //     ...st, 
-    //     currCoinSide: newCoin,
-    //     numOfFlips: st.numOfFlips + 1
-    //   }
-    //   if(newCoin.side === "heads"){
-    //     newState.numOfHeads += 1;
-    //   } else{
-    //     newState.numOfTails += 1;
-    //   }
-    //   return newState;
-    // }); 
-
+    let newCoin = choice(this.props.coins); // calling the function choice and running the coins array on it
     this.setState(st => {
       return {
-        currCoinSide: newCoin,
+    /*
+    approaching 'setState' (if/else vs. ternary expression)
+    
+    Option 1:
+      let newState = {
+        ...st, 
+        currCoin: newCoin,
+        numOfFlips: st.numOfFlips + 1
+      }
+      if(newCoin.side === "heads"){
+        newState.numOfHeads += 1;
+      } else{
+        newState.numOfTails += 1;
+      }
+      return newState;
+    }); 
+    */
+      // OPTION 2: TERNARY EXPRESSION  
+        currCoin: newCoin,
         numOfFlips: st.numOfFlips += 1, // MUST CALL (ST.) and then numOfFlips. Keep leaving off state
         numOfHeads: st.numOfHeads + (newCoin.side === "heads" ? 1 : 0),
         numOfTails: st.numOfTails + (newCoin.side === "tails" ? 1 : 0)
       }
-    })
+    });
   }
   handleClick(e) {
     this.flipCoin();
@@ -58,7 +61,13 @@ class CoinContainer extends Component {
       <div className = "CoinContainer">
         <h2>Flip The Coin</h2>
         <button onClick = {this.handleClick}>Click to Flip!</button>
-        <p>Out of {this.state.numOfFlips} flips, the coin has landed on heads {this.state.numOfHeads} times and tails {this.state.numOfTails}</p>
+        {this.state.currCoin && <Coin info = {this.state.currCoin} />}
+        {/* 'Without this.state.currCoin &&' I get an error that it can't read imgSrc of null */}
+        {/* this checks if the left side is true, meaning that it's not 'null'; prevents the coin starting off on specific image */}
+        {/* if it is null, it won't do anything */}
+        <p>
+          Out of {this.state.numOfFlips} flips, the coin has landed on heads {this.state.numOfHeads} times and tails {this.state.numOfTails}
+        </p>
       </div>
     );
   }
